@@ -1,11 +1,27 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
 import './App.css';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import 'primereact/resources/primereact.min.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Usuarios from "./pages/Usuarios"
+import Login from "./pages/Login"
+import Registro from "./pages/Registro"
 
 function App() {
+
   return (
-    <h1 className="text-3xl text-red-400 font-bold underline">
-      Hello world!
-    </h1>
+    <div className="App">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/usuarios" element={<Usuarios />} />
+        </Routes>
+      </Router>
+    </div>
+
   );
 }
 
