@@ -50,8 +50,10 @@ const DialogUsuario = ({ visible, setVisible, selectedUser }) => {
                     <InputText className='w-full' required={true} placeholder="Direccion" value={values.direccion} disabled={disabledFlag} style={{ marginBottom: "20px" }} onChange={(e)=>{handleChange(e)}} name='direccion'/>
                     <MultiSelect className='w-full' required={true} options={profesiones} name="profesiones" placeholder="Profesiones" value={values.profesiones} disabled={disabledFlag} style={{ marginBottom: "20px" }} onChange={(e)=>{handleChange(e)}}/>
                     {!disabledFlag && (
-                        <div className='flex flex-row justify-start items-center'>
-                            <button type="submit" className='bg-blue300 text-white px-4 py-2 rounded-md'>Guardar</button>
+                        <div className='flex flex-row justify-center items-center'>
+                            <button type="submit" className='text-[18px] bg-white border-[1px] border-blue300 text-blue300 px-4 py-2 rounded-md mr-4' onClick={()=>{setDisabledFlag(!disabledFlag)}}>Cancelar</button>
+                            <button type="submit" className='text-[18px] bg-blue300 text-white px-4 py-2 rounded-md flex flex-row items-center justify-center'>Guardar <Icon icon="ri:save-fill" width="20" className='ml-2'/></button>
+
                         </div>
                     )}
                 </form>
