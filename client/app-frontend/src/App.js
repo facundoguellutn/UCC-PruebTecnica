@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Usuarios from "./pages/Usuarios"
 import Login from "./pages/Login"
 import Registro from "./pages/Registro"
+import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 function App() {
 
@@ -17,7 +18,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
-          <Route path="/usuarios" element={<Usuarios />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/usuarios" element={<Usuarios />} />
+          </Route>
         </Routes>
       </Router>
     </div>

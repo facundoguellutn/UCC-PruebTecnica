@@ -4,6 +4,8 @@ import { InputText } from "primereact/inputtext";
 import { Password } from 'primereact/password';
 import { Navigate, useNavigate } from "react-router-dom";
 import {styles} from "../styles"
+import Cookies from 'js-cookie';
+
 
 const Login = () => {
   let navigate = useNavigate();
@@ -22,6 +24,8 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    let myToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    Cookies.set('token', myToken, {expires: 1 / 24 });
     navigate("/usuarios")
   }
   return (

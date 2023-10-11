@@ -2,17 +2,21 @@ import React, { useState } from 'react'
 import logo from "../../images/logo.png"
 import { Navigate, useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
-  const [logged, setLogged] = useState(true)
+  const [logged, setLogged] = useState(false)
   const [opened, setOpened] = useState(false)
   let navigate = useNavigate();
+  const token = Cookies.get('token');
+  if (token !== undefined) {
+    var flag=true
+  }
   return (
     <>
       <div className='fixed w-screen hidden md:flex flex-row justify-between items-center py-4 px-8 md:px-10 lg:px-12 xl:px-20'>
         <img src={logo} className='h-[45px]' alt="" />
-        {!logged && (
+        {!flag && (
           <>
             <div className='flex flex-row items-center '>
               <button className='px-4 py-2 text-[20px] text-blue500 rounded-[10px] bg-white border-[1px] border-blue500 mr-4 hover:bg-blue500 hover:border-blue500 hover:text-white' onClick={() => { navigate("/") }}>Iniciar sesion</button>
@@ -20,9 +24,9 @@ const Navbar = () => {
             </div>
           </>
         )}
-        {logged && (
+        {flag && (
           <>
-            <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center' onClick={() => { navigate("/") }}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
+            <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center' onClick={() => { navigate("/") ; Cookies.remove('token');}}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
           </>
         )}
       </div>
@@ -62,14 +66,14 @@ const Navbar = () => {
             <h1>Mas opciones</h1>
           </div>
         </div>
-        {!logged && (
+        {!flag && (
           <div className='flex flex-col items-start ml-4'>
             <button className='px-4 py-2 text-[20px] text-blue500' onClick={() => { setOpened(!opened);navigate("/")}}>Iniciar sesion</button>
             <button className='px-4 py-2 text-[20px]  text-blue500' onClick={() => { setOpened(!opened);navigate("registro") }}>Crear cuenta</button>
           </div>
         )}
-        {logged && (
-          <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center ml-4' onClick={() => { setOpened(!opened);navigate("/") }}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
+        {flag && (
+          <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center ml-4' onClick={() => { setOpened(!opened);navigate("/") ; Cookies.remove('token');}}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
 
         )}
       </div>
