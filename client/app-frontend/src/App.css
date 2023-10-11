@@ -341,3 +341,13 @@
 .p-password-input{
   width: 100%;
 }
+
+.modalDialog{
+  width: 40vw;
+}
+
+@media screen and (max-width:960px){
+  .modalDialog{
+    width: 80vw;
+  }
+}
