@@ -334,3 +334,10 @@
   z-index: 1000;
   position: fixed;
 }
+
+.p-password{
+  width: 100%;
+}
+.p-password-input{
+  width: 100%;
+}

@@ -15,14 +15,14 @@ const Navbar = () => {
         {!logged && (
           <>
             <div className='flex flex-row items-center '>
-              <button className='px-4 py-2 text-[20px] text-blue500 rounded-[10px] bg-white border-[1px] border-blue500 mr-4 hover:bg-blue500 hover:border-blue500 hover:text-white' onClick={() => { navigate("") }}>Iniciar sesion</button>
+              <button className='px-4 py-2 text-[20px] text-blue500 rounded-[10px] bg-white border-[1px] border-blue500 mr-4 hover:bg-blue500 hover:border-blue500 hover:text-white' onClick={() => { navigate("/") }}>Iniciar sesion</button>
               <button className='px-4 py-2 text-[20px]  rounded-[10px]  border-[1px]  bg-blue500 border-blue500 text-white' onClick={() => { navigate("registro") }}>Crear cuenta</button>
             </div>
           </>
         )}
         {logged && (
           <>
-            <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center' onClick={() => { navigate("") }}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
+            <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center' onClick={() => { navigate("/") }}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
           </>
         )}
       </div>
@@ -64,12 +64,12 @@ const Navbar = () => {
         </div>
         {!logged && (
           <div className='flex flex-col items-start ml-4'>
-            <button className='px-4 py-2 text-[20px] text-blue500' onClick={() => { setOpened(!opened);navigate("")}}>Iniciar sesion</button>
+            <button className='px-4 py-2 text-[20px] text-blue500' onClick={() => { setOpened(!opened);navigate("/")}}>Iniciar sesion</button>
             <button className='px-4 py-2 text-[20px]  text-blue500' onClick={() => { setOpened(!opened);navigate("registro") }}>Crear cuenta</button>
           </div>
         )}
         {logged && (
-          <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center ml-4' onClick={() => { setOpened(!opened);navigate("") }}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
+          <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center ml-4' onClick={() => { setOpened(!opened);navigate("/") }}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
 
         )}
       </div>
