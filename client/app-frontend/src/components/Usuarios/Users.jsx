@@ -129,6 +129,16 @@ const Users = () => {
         return <span>{rowData.apellido} {rowData.nombre}</span>;
     };
 
+    const editar = () => {
+        toast.current.show({severity:'success', summary: 'Exito', detail:'Se ha editado exitosamente el usuario', life: 3000});
+        setDialogUsuario(!dialogUsuario)
+    }
+
+    const borrar = () => {
+        toast.current.show({severity:'success', summary: 'Exito', detail:'Se ha eliminado exitosamente el usuario', life: 3000});
+        setDialogUsuario(!dialogUsuario)
+    }
+
     return (
         <div className='flex flex-col w-full'>
             <Toast ref={toast} position="top-center" />
@@ -147,7 +157,7 @@ const Users = () => {
                     <Column field="direccion" header="Dirección" sortable style={{ width: '25%' }}></Column>
                     <Column field="cantidadProfesiones" header="Cantidad de profesiones" sortable style={{ width: '25%' }}></Column>
                 </DataTable>}
-            <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} />
+            <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} editar={editar} borrar={borrar}/>
             <DialogNuevoUsuario visible={dialogNuevoUsuario} setVisible={setDialogNuevoUsuario} show={showSuccess}/>
         </div>
     )
