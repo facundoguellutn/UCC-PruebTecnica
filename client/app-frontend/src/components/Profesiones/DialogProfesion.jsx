@@ -7,7 +7,7 @@ import { styles } from '../../styles';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
 
-const DialogProfesion = ({ visible, setVisible, selectedProfesion,borrar,editar }) => {
+const DialogProfesion = ({ visible, setVisible, selectedProfesion, borrar, editar }) => {
     const [values, setValues] = useState({
         profesion: "",
         descripcion: ""
@@ -53,8 +53,8 @@ const DialogProfesion = ({ visible, setVisible, selectedProfesion,borrar,editar 
             message: '¿Esta seguro que desea eliminar esta profesión?',
             header: 'Confirmación',
             icon: 'pi pi-exclamation-triangle',
-            acceptLabel: 'Sí', 
-            rejectLabel: 'No',  
+            acceptLabel: 'Sí',
+            rejectLabel: 'No',
             accept,
             reject
         });
@@ -62,10 +62,12 @@ const DialogProfesion = ({ visible, setVisible, selectedProfesion,borrar,editar 
 
     return (
         <Dialog visible={visible} header={customHeader} onHide={() => { setVisible(false) }} className='modalDialog'>
-             <ConfirmDialog />
+            <ConfirmDialog />
             <div className='flex flex-col w-full pt-2'>
                 <form onSubmit={handleSubmit}>
+                    <label className='text-gray-400'>Profesión</label>
                     <InputText className='w-full' required={true} placeholder="Profesion" value={values.profesion} style={{ marginBottom: "20px" }} onChange={(e) => { handleChange(e) }} name='profesion' disabled={disabledFlag} />
+                    <label className='text-gray-400'>Descripción</label>
                     <InputTextarea className='w-full' required={true} placeholder="Descripcion" value={values.descripcion} style={{ marginBottom: "20px" }} onChange={(e) => { handleChange(e) }} name='descripcion' disabled={disabledFlag} />
                     {!disabledFlag && (
                         <div className='flex flex-row justify-center items-center'>

@@ -12,7 +12,7 @@ const Users = () => {
     const toast = useRef(null);
 
     const [users, setUsers] = useState(undefined)
-    const [selectedUser, setSelectedUser] = useState({ nombre: "", apellido: "", direccion: "", cantidadProfesiones: "" });
+    const [selectedUser, setSelectedUser] = useState({ nombre: "", apellido: "", direccion: "", cantidadProfesiones: "",profesiones:["",""] });
     const [dialogUsuario, setDialogUsuario] = useState(false);
     const [dialogNuevoUsuario, setDialogNuevoUsuario] = useState(false);
     const [flagAlta, setFlagAlta] = useState(false)
@@ -25,98 +25,113 @@ const Users = () => {
                     apellido: "Perez",
                     direccion: "Calle 123",
                     cantidadProfesiones: "5",
-                    profesiones: ["Profesion 1", "Profesion 2", "Profesion 3", "Profesion 4"]
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "María",
                     apellido: "Gómez",
                     direccion: "Avenida 456",
                     cantidadProfesiones: "3"
+                    ,
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Luis",
                     apellido: "Rodríguez",
                     direccion: "Calle 789",
-                    cantidadProfesiones: "2"
+                    cantidadProfesiones: "2",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Ana",
                     apellido: "Martínez",
                     direccion: "Avenida 987",
-                    cantidadProfesiones: "4"
+                    cantidadProfesiones: "4",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Carlos",
                     apellido: "López",
                     direccion: "Calle 654",
-                    cantidadProfesiones: "6"
+                    cantidadProfesiones: "6",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Laura",
                     apellido: "Sánchez",
                     direccion: "Avenida 321",
-                    cantidadProfesiones: "1"
+                    cantidadProfesiones: "1",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Roberto",
                     apellido: "Fernández",
                     direccion: "Calle 555",
-                    cantidadProfesiones: "7"
+                    cantidadProfesiones: "7",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Sofía",
                     apellido: "Ramírez",
                     direccion: "Avenida 888",
-                    cantidadProfesiones: "2"
+                    cantidadProfesiones: "2",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Pedro",
                     apellido: "González",
                     direccion: "Calle 222",
-                    cantidadProfesiones: "3"
+                    cantidadProfesiones: "3",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Carmen",
                     apellido: "Luna",
                     direccion: "Avenida 777",
-                    cantidadProfesiones: "5"
+                    cantidadProfesiones: "5",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Miguel",
                     apellido: "Díaz",
                     direccion: "Calle 444",
-                    cantidadProfesiones: "4"
+                    cantidadProfesiones: "4",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Isabel",
                     apellido: "Ortega",
                     direccion: "Avenida 666",
-                    cantidadProfesiones: "2"
+                    cantidadProfesiones: "2",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Manuel",
                     apellido: "Torres",
                     direccion: "Calle 111",
-                    cantidadProfesiones: "3"
+                    cantidadProfesiones: "3",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Elena",
                     apellido: "Vargas",
                     direccion: "Avenida 999",
-                    cantidadProfesiones: "1"
+                    cantidadProfesiones: "1",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 },
                 {
                     nombre: "Javier",
                     apellido: "Lara",
                     direccion: "Calle 333",
-                    cantidadProfesiones: "6"
+                    cantidadProfesiones: "6",
+                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
                 }
             ])
         }, 2000);
     }, [])
 
     const showSuccess = () => {
-        toast.current.show({severity:'success', summary: 'Exito', detail:'Se ha registrado exitosamente el usuario', life: 3000});
+        toast.current.show({ severity: 'success', summary: 'Exito', detail: 'Se ha registrado exitosamente el usuario', life: 3000 });
     }
 
     const onRowSelect = (event) => {
@@ -130,12 +145,12 @@ const Users = () => {
     };
 
     const editar = () => {
-        toast.current.show({severity:'success', summary: 'Exito', detail:'Se ha editado exitosamente el usuario', life: 3000});
+        toast.current.show({ severity: 'success', summary: 'Exito', detail: 'Se ha editado exitosamente el usuario', life: 3000 });
         setDialogUsuario(!dialogUsuario)
     }
 
     const borrar = () => {
-        toast.current.show({severity:'success', summary: 'Exito', detail:'Se ha eliminado exitosamente el usuario', life: 3000});
+        toast.current.show({ severity: 'success', summary: 'Exito', detail: 'Se ha eliminado exitosamente el usuario', life: 3000 });
         setDialogUsuario(!dialogUsuario)
     }
 
@@ -157,8 +172,8 @@ const Users = () => {
                     <Column field="direccion" header="Dirección" sortable style={{ width: '25%' }}></Column>
                     <Column field="cantidadProfesiones" header="Cantidad de profesiones" sortable style={{ width: '25%' }}></Column>
                 </DataTable>}
-            <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} editar={editar} borrar={borrar}/>
-            <DialogNuevoUsuario visible={dialogNuevoUsuario} setVisible={setDialogNuevoUsuario} show={showSuccess}/>
+            <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} editar={editar} borrar={borrar} />
+            <DialogNuevoUsuario visible={dialogNuevoUsuario} setVisible={setDialogNuevoUsuario} show={showSuccess} />
         </div>
     )
 }
