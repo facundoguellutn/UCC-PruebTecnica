@@ -7,9 +7,9 @@ const app = express()
 
 app.use(express.json())
 
-app.use(usuariosRoutes)
-app.use(indexRoutes)
-app.use(profesionesRoutes)
+app.use('/api',usuariosRoutes)
+app.use('/api',indexRoutes)
+app.use('/api',profesionesRoutes)
 
 app.listen(3000)
 console.log("Server on port 3000");
