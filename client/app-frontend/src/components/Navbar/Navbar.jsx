@@ -3,6 +3,7 @@ import logo from "../../images/logo.png"
 import { Navigate, useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import Cookies from 'js-cookie';
+import { logoutApi } from '../Axios/axiosApi';
 
 const Navbar = () => {
   const [logged, setLogged] = useState(false)
@@ -12,6 +13,19 @@ const Navbar = () => {
   if (token !== undefined) {
     var flag=true
   }
+
+
+  const logoutAction = async() => {
+    Cookies.remove('token');
+    try{
+      const response = await logoutApi.post(''); 
+      navigate("/");
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+
   return (
     <>
       <div className='fixed w-screen hidden md:flex flex-row justify-between items-center py-4 px-8 md:px-10 lg:px-12 xl:px-20'>
@@ -26,7 +40,7 @@ const Navbar = () => {
         )}
         {flag && (
           <>
-            <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center' onClick={() => { navigate("/") ; Cookies.remove('token');}}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
+            <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center' onClick={() => { logoutAction()}}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
           </>
         )}
       </div>
@@ -73,7 +87,7 @@ const Navbar = () => {
           </div>
         )}
         {flag && (
-          <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center ml-4' onClick={() => { setOpened(!opened);navigate("/") ; Cookies.remove('token');}}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
+          <button className='px-4 py-2 text-[20px] text-blue500 flex flex-row items-center justify-center ml-4' onClick={() => { setOpened(!opened);logoutAction()}}>Salir <Icon icon="material-symbols:logout" className='text-blue500 ml-2' /></button>
 
         )}
       </div>
