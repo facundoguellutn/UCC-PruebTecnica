@@ -27,7 +27,7 @@ export const login = async (req, res) => {
                 let token=""
                 token = await createAccesToken({ id: user.id,email:user.email })
                 res.cookie('token', token)
-                res.send({ id: user.id, email: user.email })
+                res.send({ id: user.id, email: user.email,token:token })
             }
             else{
                 res.status(401).json({ message: 'Contraseña incorrecta' });
