@@ -11,3 +11,7 @@ export const loginApi = axios.create({
 export const logoutApi = axios.create({
     baseURL: 'http://localhost:3001/api/logout',
 });
+
+export const apiRoute = axios.create({
+    baseURL: 'http://localhost:3001/api',
+});

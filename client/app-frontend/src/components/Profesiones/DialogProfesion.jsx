@@ -6,8 +6,14 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { styles } from '../../styles';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
+import { apiRoute } from '../Axios/axiosApi';
 
-const DialogProfesion = ({ visible, setVisible, selectedProfesion, borrar, editar }) => {
+
+const DialogProfesion = ({ visible, setVisible, selectedProfesion, borrar, editar,flag,setFlag }) => {
+    const token = Cookies.get('token');
+    const decodedToken = jwtDecode(token);
     const [values, setValues] = useState({
         profesion: "",
         descripcion: ""
@@ -35,14 +41,41 @@ const DialogProfesion = ({ visible, setVisible, selectedProfesion, borrar, edita
             </div>
         )
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        console.log(e)
-        editar()
+        try {
+            const response = await apiRoute.patch(`/profesiones/${selectedProfesion.id}`, values, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(e)
+            setFlag(!flag)
+            editar()
+        }
+        catch(e) {
+            console.log(e)
+        }
     }
 
-    const accept = () => {
-        borrar()
+    const accept = async() => {
+        try{
+            const response = await apiRoute.delete(`/profesiones/${selectedProfesion.id}`, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setFlag(!flag)
+            borrar()
+        }
+        catch(e){
+            console.log(e)
+        }
+
     };
 
     const reject = () => {

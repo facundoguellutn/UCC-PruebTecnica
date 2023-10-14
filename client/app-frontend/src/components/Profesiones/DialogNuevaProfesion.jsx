@@ -3,8 +3,13 @@ import { Dialog } from 'primereact/dialog';
 import { Icon } from '@iconify/react';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { apiRoute } from '../Axios/axiosApi';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 
-const DialogNuevaProfesion = ({ visible, setVisible, show }) => {
+const DialogNuevaProfesion = ({ visible, setVisible, show,flag,setFlag }) => {
+    const token = Cookies.get('token');
+    const decodedToken = jwtDecode(token);
     const [values, setValues] = useState({ profesion: "", descripcion: "" })
     const customHeader = () => {
         return (
@@ -14,11 +19,24 @@ const DialogNuevaProfesion = ({ visible, setVisible, show }) => {
             </div>
         )
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        show()
-        setVisible(!visible)
-        console.log(e)
+        try {
+            const response = await apiRoute.post('/profesiones', values, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            show()
+            setVisible(!visible)
+            setFlag(!flag)
+            console.log(e)
+        }
+        catch(e) {
+            console.log(e)
+        }
     }
     const handleChange = (e) => {
         setValues({

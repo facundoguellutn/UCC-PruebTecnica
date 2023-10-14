@@ -6,8 +6,14 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import DialogNuevaProfesion from './DialogNuevaProfesion';
 import DialogProfesion from './DialogProfesion';
+import { apiRoute } from '../Axios/axiosApi';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 
 const Profesiones = () => {
+  const [flag, setFlag] = useState(false)
+  const token = Cookies.get('token');
+  const decodedToken = jwtDecode(token);
   const toast = useRef(null);
   const [profesiones, setProfesiones] = useState(undefined)
   const [dialogProfesion, setDialogProfesion] = useState(false);
@@ -15,26 +21,19 @@ const Profesiones = () => {
   const [selectedProfesion, setSelectedProfesion] = useState({ profesion: "", descripcion: "" });
 
   useEffect(() => {
-    setTimeout(() => {
-      setProfesiones([
-        { profesion: "Ingeniero de Software", descripcion: "Diseña y desarrolla software." },
-        { profesion: "Médico", descripcion: "Trata a pacientes y realiza diagnósticos médicos." },
-        { profesion: "Abogado", descripcion: "Brinda asesoramiento legal y representa a clientes en casos legales." },
-        { profesion: "Profesor", descripcion: "Imparte conocimientos y educa a estudiantes." },
-        { profesion: "Diseñador Gráfico", descripcion: "Crea diseños visuales y gráficos." },
-        { profesion: "Chef", descripcion: "Prepara platos de comida deliciosos." },
-        { profesion: "Enfermero/a", descripcion: "Brinda cuidados médicos y apoyo a pacientes." },
-        { profesion: "Ingeniero Civil", descripcion: "Diseña y supervisa proyectos de construcción." },
-        { profesion: "Psicólogo", descripcion: "Ofrece terapia y asesoramiento emocional." },
-        { profesion: "Contador", descripcion: "Gestiona las finanzas y contabilidad de empresas." },
-        { profesion: "Arquitecto", descripcion: "Diseña y planifica edificios y estructuras." },
-        { profesion: "Electricista", descripcion: "Trabaja en sistemas eléctricos y cableado." },
-        { profesion: "Escritor", descripcion: "Crea contenido escrito, como libros y artículos." },
-        { profesion: "Fotógrafo", descripcion: "Captura imágenes fotográficas." },
-        { profesion: "Piloto", descripcion: "Opera aeronaves y realiza vuelos." }
-      ])
-    }, 2000);
-  }, [])
+    apiRoute.get('/profesiones',{
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
+      console.log(response.data)
+      setProfesiones(response.data)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [flag])
 
   const onRowSelect = (event) => {
     console.log(event.value);
@@ -72,8 +71,8 @@ const Profesiones = () => {
           <Column field="profesion" header="Profesion" sortable style={{ width: '25%' }}></Column>
           <Column field="descripcion" header="Descripcion" sortable style={{ width: '75%' }}></Column>
         </DataTable>}
-      <DialogProfesion visible={dialogProfesion} setVisible={setDialogProfesion} selectedProfesion={selectedProfesion} borrar={borrar} editar={editar} />
-      <DialogNuevaProfesion visible={dialogNuevaProfesion} setVisible={setDialogNuevaProfesion} show={showSuccess} />
+      <DialogProfesion visible={dialogProfesion} setVisible={setDialogProfesion} selectedProfesion={selectedProfesion} borrar={borrar} editar={editar} flag={flag} setFlag={setFlag}/>
+      <DialogNuevaProfesion visible={dialogNuevaProfesion} setVisible={setDialogNuevaProfesion} show={showSuccess} flag={flag} setFlag={setFlag}/>
     </div>
   )
 }
