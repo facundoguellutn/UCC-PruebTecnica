@@ -21,7 +21,6 @@ const Users = () => {
     const [selectedUser, setSelectedUser] = useState({ nombre: "", apellido: "", direccion: "", cantidadProfesiones: "", profesiones: ["", ""] });
     const [dialogUsuario, setDialogUsuario] = useState(false);
     const [dialogNuevoUsuario, setDialogNuevoUsuario] = useState(false);
-    const [flagAlta, setFlagAlta] = useState(false)
     useEffect(() => {
         apiRoute.get('/usuarios', {
             withCredentials: true,
@@ -47,7 +46,7 @@ const Users = () => {
         }).catch(error => {
             console.log(error)
         })
-    }, [])
+    }, [flag])
 
     const showSuccess = () => {
         toast.current.show({ severity: 'success', summary: 'Exito', detail: 'Se ha registrado exitosamente el usuario', life: 3000 });
@@ -96,7 +95,7 @@ const Users = () => {
                     <Column field="cantidadProfesiones" body={profesionesTemplate} header="Cantidad de profesiones" sortable style={{ width: '25%' }}></Column>
                 </DataTable>}
             <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} editar={editar} borrar={borrar} />
-            <DialogNuevoUsuario visible={dialogNuevoUsuario} setVisible={setDialogNuevoUsuario} show={showSuccess} />
+            <DialogNuevoUsuario visible={dialogNuevoUsuario} setVisible={setDialogNuevoUsuario} show={showSuccess} flag={flag} setFlag={setFlag}/>
         </div>
     )
 }

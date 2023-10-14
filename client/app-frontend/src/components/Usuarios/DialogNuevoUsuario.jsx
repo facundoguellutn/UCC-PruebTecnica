@@ -4,15 +4,21 @@ import { Icon } from '@iconify/react';
 import { InputText } from 'primereact/inputtext';
 import { MultiSelect } from 'primereact/multiselect';
 import { styles } from '../../styles'
+import { apiRoute } from '../Axios/axiosApi';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 
-const DialogNuevoUsuario = ({ visible, setVisible, show }) => {
+const DialogNuevoUsuario = ({ visible, setVisible, show,flag,setFlag }) => {
+    const token = Cookies.get('token');
+    const decodedToken = jwtDecode(token);
     const [values, setValues] = useState({})
-    const profesiones = [
+    const [info, setInfo] = useState([])
+    const [profesiones, setProfesiones] = useState([
         "Profesion 1",
         "Profesion 2",
         "Profesion 3",
         "Profesion 4"
-    ]
+    ])
     const customHeader = () => {
         return (
             <div className='flex flex-row justify-center items-center'>
@@ -22,11 +28,32 @@ const DialogNuevoUsuario = ({ visible, setVisible, show }) => {
         )
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        show()
-        setVisible(!visible)
-        console.log(e)
+        const profesionIDs = values.profesiones.map(profesionName => {
+            const profesionInfo = info.find(profesionObj => profesionObj.profesion === profesionName);
+            return profesionInfo ? profesionInfo.id : null;
+        });
+        const dataToSubmit = {
+            ...values,
+            profesiones: profesionIDs
+        };
+        try{
+            const response = await apiRoute.post('/usuarios', dataToSubmit, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${Cookies.get('token')}`
+                }
+            });
+            console.log(response.data);
+            setFlag(!flag)
+            show()
+            setVisible(!visible)
+        }
+        catch(error){
+            console.log(error)
+        }
     }
 
     const handleChange = (e) => {
@@ -42,6 +69,20 @@ const DialogNuevoUsuario = ({ visible, setVisible, show }) => {
             apellido: "",
             direccion: "",
             profesiones: []
+        })
+        apiRoute.get('/profesiones', {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        }).then(response => {
+            console.log(response.data)
+            const profesionesArray = response.data.map(profesionObj => profesionObj.profesion);
+            setInfo(response.data)
+            setProfesiones(profesionesArray)
+        }).catch(error => {
+            console.log(error)
         })
     }, [visible])
 
