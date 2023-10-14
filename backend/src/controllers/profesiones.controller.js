@@ -63,3 +63,15 @@ export const deleteProfesionById = async (req, res) => {
     }
 }
 
+export const cantidadProfesiones = async (req, res) => {
+    try {
+        const [countRows] = await pool.query('SELECT COUNT(*) AS count FROM profesion');
+        const count = countRows[0].count;
+    
+        res.status(200).json({ count });
+      } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'Error interno del servidor' });
+      }
+}
+

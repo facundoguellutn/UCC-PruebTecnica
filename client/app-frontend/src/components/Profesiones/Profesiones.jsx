@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 
 const Profesiones = () => {
+  const [cantidad,setCantidad] = useState("0")
   const [flag, setFlag] = useState(false)
   const token = Cookies.get('token');
   const decodedToken = jwtDecode(token);
@@ -30,6 +31,18 @@ const Profesiones = () => {
     }).then(response => {
       console.log(response.data)
       setProfesiones(response.data)
+    }).catch(error => {
+      console.log(error)
+    })
+    apiRoute.get('/profesiones/cantidad/obtener',{
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
+      console.log(response.data)
+      setCantidad(response.data)
     }).catch(error => {
       console.log(error)
     })
@@ -65,7 +78,7 @@ const Profesiones = () => {
         </div>
         <button className='flex flex-row items-center justify-center  px-4 py-2 text-[18px] text-blue300 bg-white border-[1px] border-blue300 rounded-[10px]' onClick={() => { setDialogNuevaProfesion(!dialogNuevaProfesion) }}> Agregar profesion <Icon icon="mingcute:add-fill" width="20" className='text-blue300 ml-2' /></button>
       </div>
-      <h1 className='text-[24px] text-blue500 text-left mb-2'>Cantidad de profesiones: <span className='text-blue200'>24</span></h1>
+      <h1 className='text-[24px] text-blue500 text-left mb-2'>Cantidad de profesiones: <span className='text-blue200'>{cantidad.count}</span></h1>
       {profesiones === undefined ? <SkeletonTabla /> :
         <DataTable value={profesiones} stripedRows paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '100%' }} selectionMode="single" selection={selectedProfesion} onSelectionChange={onRowSelect}>
           <Column field="profesion" header="Profesion" sortable style={{ width: '25%' }}></Column>

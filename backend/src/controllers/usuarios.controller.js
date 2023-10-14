@@ -85,3 +85,13 @@ export const deleteUsuarioById = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 }
+
+export const cantidadUsuarios = async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT COUNT(*) AS cantidad FROM usuario');
+        res.status(200).json(rows[0]);
+    }
+    catch (e) {
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}

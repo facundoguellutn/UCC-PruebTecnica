@@ -6,128 +6,47 @@ import { Column } from 'primereact/column';
 import DialogUsuario from './DialogUsuario';
 import DialogNuevoUsuario from './DialogNuevoUsuario';
 import { Toast } from 'primereact/toast';
+import { apiRoute } from '../Axios/axiosApi';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 
 
 const Users = () => {
     const toast = useRef(null);
-
+    const [cantidad, setCantidad] = useState("0")
+    const [flag, setFlag] = useState(false)
+    const token = Cookies.get('token');
+    const decodedToken = jwtDecode(token);
     const [users, setUsers] = useState(undefined)
-    const [selectedUser, setSelectedUser] = useState({ nombre: "", apellido: "", direccion: "", cantidadProfesiones: "",profesiones:["",""] });
+    const [selectedUser, setSelectedUser] = useState({ nombre: "", apellido: "", direccion: "", cantidadProfesiones: "", profesiones: ["", ""] });
     const [dialogUsuario, setDialogUsuario] = useState(false);
     const [dialogNuevoUsuario, setDialogNuevoUsuario] = useState(false);
     const [flagAlta, setFlagAlta] = useState(false)
     useEffect(() => {
-        setUsers(undefined)
-        setTimeout(() => {
-            setUsers([
-                {
-                    nombre: "Juan",
-                    apellido: "Perez",
-                    direccion: "Calle 123",
-                    cantidadProfesiones: "5",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "María",
-                    apellido: "Gómez",
-                    direccion: "Avenida 456",
-                    cantidadProfesiones: "3"
-                    ,
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Luis",
-                    apellido: "Rodríguez",
-                    direccion: "Calle 789",
-                    cantidadProfesiones: "2",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Ana",
-                    apellido: "Martínez",
-                    direccion: "Avenida 987",
-                    cantidadProfesiones: "4",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Carlos",
-                    apellido: "López",
-                    direccion: "Calle 654",
-                    cantidadProfesiones: "6",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Laura",
-                    apellido: "Sánchez",
-                    direccion: "Avenida 321",
-                    cantidadProfesiones: "1",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Roberto",
-                    apellido: "Fernández",
-                    direccion: "Calle 555",
-                    cantidadProfesiones: "7",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Sofía",
-                    apellido: "Ramírez",
-                    direccion: "Avenida 888",
-                    cantidadProfesiones: "2",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Pedro",
-                    apellido: "González",
-                    direccion: "Calle 222",
-                    cantidadProfesiones: "3",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Carmen",
-                    apellido: "Luna",
-                    direccion: "Avenida 777",
-                    cantidadProfesiones: "5",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Miguel",
-                    apellido: "Díaz",
-                    direccion: "Calle 444",
-                    cantidadProfesiones: "4",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Isabel",
-                    apellido: "Ortega",
-                    direccion: "Avenida 666",
-                    cantidadProfesiones: "2",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Manuel",
-                    apellido: "Torres",
-                    direccion: "Calle 111",
-                    cantidadProfesiones: "3",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Elena",
-                    apellido: "Vargas",
-                    direccion: "Avenida 999",
-                    cantidadProfesiones: "1",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                },
-                {
-                    nombre: "Javier",
-                    apellido: "Lara",
-                    direccion: "Calle 333",
-                    cantidadProfesiones: "6",
-                    profesiones: [{profesion:"Profesion 1",descripcion:"Esta es una descr"},{profesion:"Profesion 2",descripcion:"Esta es una descr"},{profesion:"Profesion 3",descripcion:"Esta es una descr"},{profesion:"Profesion 4",descripcion:"Esta es una descr"}]
-                }
-            ])
-        }, 2000);
+        apiRoute.get('/usuarios', {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            console.log(response.data)
+            setUsers(response.data)
+        }).catch(error => {
+            console.log(error)
+        })
+        apiRoute.get('/usuarios/cantidad/obtener', {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            console.log(response.data)
+            setCantidad(response.data)
+        }).catch(error => {
+            console.log(error)
+        })
     }, [])
 
     const showSuccess = () => {
@@ -142,6 +61,10 @@ const Users = () => {
 
     const nombreApellidoTemplate = (rowData) => {
         return <span>{rowData.apellido} {rowData.nombre}</span>;
+    };
+
+    const profesionesTemplate = (rowData) => {
+        return <span>{rowData.profesiones.length}</span>;
     };
 
     const editar = () => {
@@ -165,12 +88,12 @@ const Users = () => {
                 </div>
                 <button className='flex flex-row items-center justify-center  px-4 py-2 text-[18px] text-blue300 bg-white border-[1px] border-blue300 rounded-[10px]' onClick={() => { setDialogNuevoUsuario(!dialogNuevoUsuario) }}> Agregar usuario <Icon icon="mingcute:add-fill" width="20" className='text-blue300 ml-2' /></button>
             </div>
-            <h1 className='text-[24px] text-blue500 text-left mb-2'>Cantidad de usuarios: <span className='text-blue200'>24</span></h1>
+            <h1 className='text-[24px] text-blue500 text-left mb-2'>Cantidad de usuarios: <span className='text-blue200'>{cantidad.cantidad}</span></h1>
             {users === undefined ? <SkeletonTabla /> :
                 <DataTable value={users} stripedRows paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '100%' }} selectionMode="single" selection={selectedUser} onSelectionChange={onRowSelect}>
                     <Column field="nombre" header="Nombre" body={nombreApellidoTemplate} sortable style={{ width: '25%' }}></Column>
                     <Column field="direccion" header="Dirección" sortable style={{ width: '25%' }}></Column>
-                    <Column field="cantidadProfesiones" header="Cantidad de profesiones" sortable style={{ width: '25%' }}></Column>
+                    <Column field="cantidadProfesiones" body={profesionesTemplate} header="Cantidad de profesiones" sortable style={{ width: '25%' }}></Column>
                 </DataTable>}
             <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} editar={editar} borrar={borrar} />
             <DialogNuevoUsuario visible={dialogNuevoUsuario} setVisible={setDialogNuevoUsuario} show={showSuccess} />
