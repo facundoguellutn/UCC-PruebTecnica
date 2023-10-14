@@ -6,17 +6,23 @@ import { MultiSelect } from 'primereact/multiselect';
 import { styles } from '../../styles'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Tooltip } from 'primereact/tooltip';
+import { apiRoute } from '../Axios/axiosApi';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 
-const DialogUsuario = ({ visible, setVisible, selectedUser, editar, borrar }) => {
+const DialogUsuario = ({ visible, setVisible, selectedUser, editar, borrar, flag, setFlag }) => {
+    const token = Cookies.get('token');
+    const decodedToken = jwtDecode(token);
     const [values, setValues] = useState({})
     const [disabledFlag, setDisabledFlag] = useState(true)
     const [selectedProfesiones, setSelectedProfesiones] = useState([]);
-    const profesiones = [
-       "Profesion 1",
-       "Profesion 2",
-       "Profesion 3",
-       "Profesion 4",
-    ]
+    const [info, setInfo] = useState([])
+    const [profesiones, setProfesiones] = useState([
+        "Profesion 1",
+        "Profesion 2",
+        "Profesion 3",
+        "Profesion 4"
+    ])
     const customHeader = () => {
         return (
             <div className='flex flex-row justify-center items-center'>
@@ -26,13 +32,49 @@ const DialogUsuario = ({ visible, setVisible, selectedUser, editar, borrar }) =>
         )
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(e)
-        editar()
+        const profesionIDs = selectedProfesiones.map(profesionName => {
+            const profesionInfo = info.find(profesionObj => profesionObj.profesion === profesionName);
+            return profesionInfo ? profesionInfo.id : null;
+        });
+        const dataToSubmit = {
+            ...values,
+            profesiones: profesionIDs
+        };
+        try {
+            const response = await apiRoute.patch(`/usuarios/${selectedUser.id}`, dataToSubmit, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${Cookies.get('token')}`
+                }
+            });
+            console.log(response.data);
+            setFlag(!flag)
+            editar()
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
-    const accept = () => {
-        borrar()
+    const accept = async () => {
+        try {
+            const response = await apiRoute.delete(`/usuarios/${selectedUser.id}`, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${Cookies.get('token')}`
+                }
+            });
+            console.log(response.data);
+            setFlag(!flag)
+            borrar()
+        }
+        catch (error) {
+            console.log(error)
+        }
     };
 
     const reject = () => {
@@ -51,6 +93,20 @@ const DialogUsuario = ({ visible, setVisible, selectedUser, editar, borrar }) =>
     };
 
     useEffect(() => {
+        apiRoute.get('/profesiones', {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        }).then(response => {
+            console.log(response.data)
+            const profesionesArray = response.data.map(profesionObj => profesionObj.profesion);
+            setInfo(response.data)
+            setProfesiones(profesionesArray)
+        }).catch(error => {
+            console.log(error)
+        })
         let flag = true
         setDisabledFlag(flag)
         setValues(selectedUser)
@@ -66,6 +122,10 @@ const DialogUsuario = ({ visible, setVisible, selectedUser, editar, borrar }) =>
             ...values,
             [e.target.name]: e.target.value
         })
+    }
+
+    const handleChangeMulti = (e) => {
+        setSelectedProfesiones(e.value)
     }
 
     return (
@@ -98,11 +158,11 @@ const DialogUsuario = ({ visible, setVisible, selectedUser, editar, borrar }) =>
                     {!disabledFlag && (
                         <>
                             <label className='text-gray-400'>Profesiones</label>
-                            <MultiSelect className='w-full' required={true} options={profesiones}  name="profesiones" placeholder="Profesiones" value={selectedProfesiones} disabled={disabledFlag} style={{ marginBottom: "20px" }} onChange={(e) => { handleChange(e) }} />
+                            <MultiSelect className='w-full' required={true} options={profesiones} name="profesiones" placeholder="Profesiones" value={selectedProfesiones} disabled={disabledFlag} style={{ marginBottom: "20px" }} onChange={(e) => { handleChangeMulti(e) }} />
                         </>)}
                     {!disabledFlag && (
                         <div className='flex flex-row justify-center items-center'>
-                            <button type="submit" className='text-[18px] bg-white border-[1px] border-blue300 text-blue300 px-4 py-2 rounded-md mr-4' onClick={() => { setDisabledFlag(!disabledFlag) }}>Cancelar</button>
+                            <button type="submit" className='text-[18px] bg-white border-[1px] border-blue300 text-blue300 px-4 py-2 rounded-md mr-4' onClick={() => { setDisabledFlag(!disabledFlag)}}>Cancelar</button>
                             <button type="submit" className='text-[18px] bg-blue300 text-white px-4 py-2 rounded-md flex flex-row items-center justify-center'>Guardar <Icon icon="ri:save-fill" width="20" className='ml-2' /></button>
 
                         </div>

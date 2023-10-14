@@ -94,7 +94,7 @@ const Users = () => {
                     <Column field="direccion" header="Dirección" sortable style={{ width: '25%' }}></Column>
                     <Column field="cantidadProfesiones" body={profesionesTemplate} header="Cantidad de profesiones" sortable style={{ width: '25%' }}></Column>
                 </DataTable>}
-            <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} editar={editar} borrar={borrar} />
+            <DialogUsuario visible={dialogUsuario} setVisible={setDialogUsuario} selectedUser={selectedUser} editar={editar} borrar={borrar} flag={flag} setFlag={setFlag}/>
             <DialogNuevoUsuario visible={dialogNuevoUsuario} setVisible={setDialogNuevoUsuario} show={showSuccess} flag={flag} setFlag={setFlag}/>
         </div>
     )
