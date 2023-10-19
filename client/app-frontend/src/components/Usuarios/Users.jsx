@@ -90,7 +90,7 @@ const Users = () => {
             <h1 className='text-[24px] text-blue500 text-left mb-2'>Cantidad de usuarios: <span className='text-blue200'>{cantidad.cantidad}</span></h1>
             {users === undefined ? <SkeletonTabla /> :
                 <DataTable value={users} stripedRows paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '100%' }} selectionMode="single" selection={selectedUser} onSelectionChange={onRowSelect}>
-                    <Column field="nombre" header="Nombre" body={nombreApellidoTemplate} sortable style={{ width: '25%' }}></Column>
+                    <Column field="apellido" header="Nombre" body={nombreApellidoTemplate} sortable style={{ width: '25%' }}></Column>
                     <Column field="direccion" header="Dirección" sortable style={{ width: '25%' }}></Column>
                     <Column field="cantidadProfesiones" body={profesionesTemplate} header="Cantidad de profesiones" sortable style={{ width: '25%' }}></Column>
                 </DataTable>}
