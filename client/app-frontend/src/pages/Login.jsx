@@ -33,7 +33,12 @@ const Login = () => {
     }
     catch(error){
       console.log(error)
-      toast.current.show({ severity: 'warn', summary: 'Advertencia', detail: error.response.data.message, life: 3000 });
+      if(error.code !== 'ERR_NETWORK'){
+        toast.current.show({ severity: 'warn', summary: 'Advertencia', detail: error.response.data.message, life: 3000 });
+      }
+      else{
+        toast.current.show({ severity: 'error', summary: 'Error', detail: "Error en el servidor", life: 3000 });
+      }
     }
     // let myToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
     // Cookies.set('token', myToken, {expires: 1 / 24 });
